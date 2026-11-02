@@ -34,7 +34,7 @@ I built it with a Class 11 student in mind: someone who's curious and has never 
 
 **Try it for real.** One button looks up a site's real IP address over DNS-over-HTTPS. Another loads the real page. A short guide shows you the same stages in your own browser's DevTools.
 
-It also has a light and a dark theme, works on phones, and needs no account.
+It also has a light and a dark theme, works on phones, and needs no account. The live site counts page views with cookieless Vercel Analytics, and that's all it collects.
 
 <table>
   <tr>

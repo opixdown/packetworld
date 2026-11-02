@@ -15,7 +15,7 @@ Why PacketWorld is built the way it is. Format and process: [ADR 0001](0001-reco
 | 0009 | [TLS 1.3 with HTTP/1.1 for the main example](0009-tls13-and-http11-for-the-main-example.md) | Accepted |
 | 0010 | [Readable initial sequence numbers](0010-readable-sequence-numbers.md) | Accepted |
 | 0011 | [Hash router for static hosting](0011-hash-router-for-static-hosting.md) | Accepted |
-| 0012 | [No backend and no accounts](0012-no-backend-no-accounts.md) | Accepted, amended by 0018 |
+| 0012 | [No backend and no accounts](0012-no-backend-no-accounts.md) | Accepted, amended by 0018 and 0023 |
 | 0013 | [Seeded, reproducible packet loss](0013-seeded-packet-loss.md) | Accepted |
 | 0014 | [Show addresses as seen by the client](0014-addresses-as-seen-by-the-client.md) | Accepted |
 | 0015 | [DNS cache modes, with the cold cache as an explicit choice](0015-dns-cache-modes.md) | Accepted |
@@ -26,10 +26,11 @@ Why PacketWorld is built the way it is. Format and process: [ADR 0001](0001-reco
 | 0020 | [Host on Vercel](0020-host-on-vercel.md) | Accepted |
 | 0021 | [Always-dark "chalkboard" theme](0021-always-dark-chalkboard-theme.md) | Amended by 0022 |
 | 0022 | [Light and dark themes with a toggle](0022-light-and-dark-toggle.md) | Accepted |
+| 0023 | [Privacy-friendly analytics and an approved X posting queue](0023-privacy-friendly-analytics.md) | Accepted |
 
 ## Writing a new ADR
 
-1. Copy [template.md](template.md) to the next number, e.g. `0023-short-title.md`.
+1. Copy [template.md](template.md) to the next number, e.g. `0024-short-title.md`.
 2. Fill in context, decision, consequences and alternatives. Keep it to one page.
 3. Add it to the table above in the same pull request as the change it describes.
 4. To reverse a decision, write a new ADR that supersedes the old one and set the old one's status to `Superseded by NNNN`.

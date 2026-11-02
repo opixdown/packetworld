@@ -1,6 +1,8 @@
+import { Analytics } from '@vercel/analytics/react'
 import { Suspense, lazy } from 'react'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
+import { analyticsBeforeSend } from './lib/analytics'
 import { LandingPage } from './pages/Landing'
 import { NotFoundPage } from './pages/NotFound'
 import { RouteError } from './pages/RouteError'
@@ -45,6 +47,8 @@ export function App() {
     <ThemeProvider>
       <ModeProvider>
         <RouterProvider router={router} />
+        {/* Cookieless page-view counts (Vercel Web Analytics). ADR 0023. */}
+        <Analytics beforeSend={analyticsBeforeSend} />
       </ModeProvider>
     </ThemeProvider>
   )

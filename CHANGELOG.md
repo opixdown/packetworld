@@ -14,7 +14,9 @@ All notable changes to this project are documented here. The format follows [Kee
 - Screenshots in the README.
 - "Now try it for real" panel with three tabs: real DNS lookup, the real page loaded in a sandboxed frame, and a guide to seeing every request in your own browser's DevTools, mapped to PacketWorld's stages.
 - Simulated example.com text now matches the real page.
-- ADRs 0017–0022.
+- Vercel Web Analytics (cookieless page views, hash routes counted as pages).
+- "Post to X" GitHub Action that posts approved items from `marketing/x-posts.json` once a day; CI validates the queue. See docs/MARKETING.md.
+- ADRs 0017–0023.
 - An intro film (`#/promo/intro`): a tour of the website including the lessons and quizzes, with an original soundtrack composed in code (`scripts/compose-music.mjs`) and a frame-exact renderer (`scripts/render-intro.mjs`).
 
 ### Changed

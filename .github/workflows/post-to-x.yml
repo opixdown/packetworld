@@ -1,0 +1,49 @@
+name: Post to X
+
+# Posts the next approved post from marketing/x-posts.json once a day.
+# Nothing is posted unless you set its status to "approved". See docs/MARKETING.md.
+on:
+  schedule:
+    - cron: '30 14 * * *' # 14:30 UTC = 8:00 PM in India, every day
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only show what would be posted (post nothing)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-to-x
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Post the next approved post
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: node scripts/post-to-x.mjs ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '--dry-run' || '' }}
+      - name: Save the updated queue
+        run: |
+          if git diff --quiet -- marketing/x-posts.json; then
+            echo "Queue unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add marketing/x-posts.json
+          git commit -m "Mark X post as posted [skip ci]"
+          git push

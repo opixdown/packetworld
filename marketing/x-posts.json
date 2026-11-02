@@ -1,0 +1,44 @@
+{
+  "about": "Queue for the 'Post to X' GitHub Action. It posts the first post with status 'approved', once a day, then marks it 'posted'. To approve a post, change its status from 'draft' to 'approved'. Each item in 'thread' is one post; the rest are replies. 'media' is attached to the first post. See docs/MARKETING.md.",
+  "posts": [
+    {
+      "id": "launch",
+      "status": "draft",
+      "media": "docs/media/packetworld-intro.mp4",
+      "thread": [
+        "I built a website that shows you what actually happens when you open a website.\n\nType a URL, press Start, and watch every packet: DNS, the TCP handshake, TLS, HTTP. It stops after each step so you can read. Tap anything to learn what it is.\n\nFree: packetworld.vercel.app",
+        "It's made for people seeing this for the first time. I kept a Class 11 student in mind the whole way, so every step is a sentence or two and the jargon is clickable.\n\nSwitch to Technical and you get real header fields and sequence numbers.",
+        "You can also break it on purpose.\n\nLose the SYN and watch TCP wait a second and send it again. Expire the certificate. Add 200 ms of lag and watch the page crawl.",
+        "Everything on the map is simulated, so it's safe to poke at. One button does a real DNS lookup so you can compare.\n\nIt's open source. If you teach networking, or you're learning it, I'd love to hear what's confusing: github.com/opixdown/packetworld"
+      ]
+    },
+    {
+      "id": "dns-cache",
+      "status": "draft",
+      "thread": [
+        "Most DNS diagrams show your computer asking the root server, then .com, then the site's own server.\n\nThat almost never happens. The answer is usually cached and comes back in a millisecond.\n\nFlip between both on PacketWorld: packetworld.vercel.app"
+      ]
+    },
+    {
+      "id": "handshake",
+      "status": "draft",
+      "thread": [
+        "Before your browser shows you a single pixel of a website, it trades three tiny packets with the server just to agree to talk. SYN, SYN-ACK, ACK.\n\nThen a second round to agree on encryption keys. Then it asks for the page.\n\nWatch it step by step: packetworld.vercel.app"
+      ]
+    },
+    {
+      "id": "lost-syn",
+      "status": "draft",
+      "thread": [
+        "One lost packet at the very start of a connection costs you a full second.\n\nNobody tells your computer the first SYN vanished. It just waits for a timer, then sends the exact same packet again.\n\nYou can lose it on purpose here: packetworld.vercel.app/#/learn/tcp-handshake"
+      ]
+    },
+    {
+      "id": "https-metadata",
+      "status": "draft",
+      "thread": [
+        "HTTPS hides the page you're reading, your cookies and the full URL.\n\nIt doesn't hide which server you're talking to, how much data moves, or usually the site's name.\n\nPacketWorld shows both lists on every encrypted packet: packetworld.vercel.app"
+      ]
+    }
+  ]
+}

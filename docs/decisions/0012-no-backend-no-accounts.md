@@ -1,6 +1,6 @@
 # 12. No backend and no accounts
 
-- **Status:** Accepted, amended by [0018](0018-optional-real-dns-lookup.md)
+- **Status:** Accepted, amended by [0018](0018-optional-real-dns-lookup.md) and [0023](0023-privacy-friendly-analytics.md)
 - **Date:** 2026-11-02
 
 ## Context
