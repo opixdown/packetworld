@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#171614" />
+    <meta name="description" content="PacketWorld: learn computer networking by watching it happen. Interactive simulations of DNS, TCP, TLS and HTTP." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>PacketWorld · See how the internet works</title>
+    <script>
+      // Apply the saved theme before first paint (dark by default). See src/state/theme.tsx.
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('pw.theme') === '"light"' ? 'light' : 'dark'
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Theme tokens as RGB channels, so Tailwind's opacity modifiers keep working.
+     Dark is the default; [data-theme='light'] switches everything (ADR 0022). */
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --pw-paper: 23 22 20;
+    --pw-paper-2: 16 15 13;
+    --pw-card: 34 32 28;
+    --pw-wash: 44 42 37;
+    --pw-rule: 58 55 47;
+    --pw-rule-strong: 87 82 74;
+    --pw-edge: 110 103 92;
+    --pw-fg: 239 233 220;
+    --pw-fg-muted: 181 173 158;
+    --pw-fg-faint: 142 134 119;
+    --pw-dns: 242 184 75;
+    --pw-tcp: 108 180 240;
+    --pw-udp: 240 122 176;
+    --pw-tls: 183 156 245;
+    --pw-http: 95 203 140;
+    --pw-ip: 168 176 188;
+    --pw-error: 242 115 95;
+    --pw-warn: 245 158 75;
+    --pw-t-dns: 59 47 21;
+    --pw-t-tcp: 22 48 74;
+    --pw-t-udp: 63 28 46;
+    --pw-t-tls: 44 34 70;
+    --pw-t-http: 23 56 38;
+    --pw-t-ip: 42 45 51;
+    --pw-t-error: 69 32 26;
+    --pw-t-warn: 67 44 20;
+    --pw-t-marker: 77 66 19;
+    --pw-grid-a: rgb(239 233 220 / 0.06);
+    --pw-grid-b: rgb(239 233 220 / 0.028);
+    --pw-highlight: rgb(245 213 71 / 0.45);
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --pw-paper: 243 238 228;
+    --pw-paper-2: 234 227 213;
+    --pw-card: 251 248 242;
+    --pw-wash: 239 232 218;
+    --pw-rule: 217 207 189;
+    --pw-rule-strong: 184 171 148;
+    --pw-edge: 29 27 23;
+    --pw-fg: 29 27 23;
+    --pw-fg-muted: 87 81 74;
+    --pw-fg-faint: 115 106 92;
+    --pw-dns: 154 98 0;
+    --pw-tcp: 31 100 160;
+    --pw-udp: 168 51 106;
+    --pw-tls: 106 68 166;
+    --pw-http: 46 122 76;
+    --pw-ip: 91 100 112;
+    --pw-error: 191 59 43;
+    --pw-warn: 184 95 14;
+    --pw-t-dns: 247 228 181;
+    --pw-t-tcp: 215 231 244;
+    --pw-t-udp: 244 216 229;
+    --pw-t-tls: 230 220 245;
+    --pw-t-http: 213 236 221;
+    --pw-t-ip: 227 229 232;
+    --pw-t-error: 246 214 207;
+    --pw-t-warn: 247 224 200;
+    --pw-t-marker: 251 227 142;
+    --pw-grid-a: rgb(185 171 148 / 0.28);
+    --pw-grid-b: rgb(185 171 148 / 0.14);
+    --pw-highlight: #fbe38e;
+  }
+}
+
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper font-sans text-fg antialiased;
+    /* A chalkboard grid: fine 24px squares with a stronger line every 5. */
+    background-image:
+      linear-gradient(to right, var(--pw-grid-a) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--pw-grid-a) 1px, transparent 1px),
+      linear-gradient(to right, var(--pw-grid-b) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--pw-grid-b) 1px, transparent 1px);
+    background-size:
+      120px 120px,
+      120px 120px,
+      24px 24px,
+      24px 24px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  ::selection {
+    background: rgb(245 213 71 / 0.4);
+  }
+
+  :focus-visible {
+    outline: 2.5px solid rgb(var(--pw-tcp));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  .pw-range {
+    @apply h-1.5 cursor-pointer appearance-none rounded-full bg-rule;
+  }
+  .pw-range::-webkit-slider-thumb {
+    @apply h-4 w-4 appearance-none rounded-full border-2 border-paper bg-proto-dns;
+  }
+  .pw-range::-moz-range-thumb {
+    @apply h-3.5 w-3.5 rounded-full border-2 border-paper bg-proto-dns;
+  }
+
+  .pw-link {
+    @apply font-semibold text-fg underline decoration-proto-tcp decoration-2 underline-offset-4 hover:bg-tint-marker;
+  }
+
+  /* Ink buttons that press into the paper. */
+  .pw-btn-primary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md border-[1.5px] border-fg bg-fg px-5 py-2.5 text-[0.95rem] font-bold text-card shadow-note transition-transform active:translate-x-[3px] active:translate-y-[3px] active:shadow-none;
+  }
+
+  .pw-btn-secondary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md border-[1.5px] border-edge bg-card px-5 py-2.5 text-[0.95rem] font-bold text-fg shadow-note transition-transform hover:bg-tint-marker active:translate-x-[3px] active:translate-y-[3px] active:shadow-none;
+  }
+
+  .pw-input {
+    @apply rounded-md border-[1.5px] border-edge bg-paper px-3 py-2.5 text-base text-fg placeholder:text-fg-faint focus:outline-none focus:ring-2 focus:ring-proto-tcp/40;
+  }
+
+  .pw-select {
+    @apply rounded-md border-[1.5px] border-edge bg-paper px-2.5 py-2.5 text-base text-fg focus:outline-none focus:ring-2 focus:ring-proto-tcp/40;
+  }
+
+  /* A chalk-highlighter swipe under a word. */
+  .pw-mark {
+    background: linear-gradient(transparent 60%, var(--pw-highlight) 60%, var(--pw-highlight) 92%, transparent 92%);
+    padding: 0 0.1em;
+  }
+
+  .pw-prose p {
+    @apply mb-3 leading-relaxed text-fg-muted;
+  }
+  .pw-prose strong {
+    @apply font-bold text-fg;
+  }
+  .pw-prose code {
+    @apply rounded bg-wash px-1 py-0.5 font-mono text-[0.85em] text-fg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

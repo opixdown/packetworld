@@ -1,0 +1,417 @@
+/* Landing hero. Scoped under .pwh; geometry is in design pixels of the stage
+   (720 × 400 wide, 358 × 530 compact) and the Stage scales it to fit. */
+
+.pwh {
+  --pwh-ink: rgb(var(--pw-fg));
+  --pwh-edge: rgb(var(--pw-edge));
+  --pwh-dns: rgb(var(--pw-dns));
+  --pwh-tcp: rgb(var(--pw-tcp));
+  --pwh-tls: rgb(var(--pw-tls));
+  --pwh-http: rgb(var(--pw-http));
+  --pwh-dns-tint: rgb(var(--pw-t-dns));
+  --pwh-tcp-tint: rgb(var(--pw-t-tcp));
+  --pwh-tls-tint: rgb(var(--pw-t-tls));
+  --pwh-http-tint: rgb(var(--pw-t-http));
+  /* Chalk outline plus a flat offset edge: a card on the board. */
+  --pwh-card-edge: 0 0 0 1.5px var(--pwh-edge), 4px 4px 0 1.5px var(--pwh-edge);
+  --pwh-travel: cubic-bezier(0.45, 0, 0.1, 1);
+}
+
+/* The page is the ground: no plate behind the scene. */
+.pwh .ss-stage {
+  overflow: hidden;
+  background: transparent;
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+}
+
+/* ---- The browser: whole, inset by the gutter. A fade-crop would turn the
+   light page into a gray band over the dark ground. ---- */
+
+.pwh .pwh-win {
+  position: absolute;
+  top: 36px;
+  left: 32px;
+  width: 304px;
+  height: 328px;
+  box-shadow: var(--pwh-card-edge);
+}
+
+.pwh .ss-stage[data-layout='compact'] .pwh-win {
+  top: 16px;
+  left: 16px;
+  width: 326px;
+  height: 236px;
+}
+
+.pwh .pwh-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ss-text-strong);
+}
+
+.pwh .pwh-url-empty {
+  color: var(--ss-text-faint);
+}
+
+/* The lock opens its own space as the connection becomes secure. */
+.pwh .pwh-lock {
+  display: inline-grid;
+  place-items: center;
+  width: 0;
+  margin-right: -6px;
+  overflow: hidden;
+  color: var(--pwh-tls);
+  opacity: 0;
+  transition:
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    margin 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease 0.12s;
+}
+
+.pwh .pwh-lock[data-on] {
+  width: 11px;
+  margin-right: 0;
+  opacity: 1;
+}
+
+/* ---- The page: a light document inside the dark browser ---- */
+
+.pwh .pwh-page {
+  height: 100%;
+  min-height: 290px;
+  padding: 28px 24px;
+  background: rgb(var(--pw-paper));
+}
+
+.pwh .ss-stage[data-layout='compact'] .pwh-page {
+  min-height: 198px;
+  padding: 22px 20px;
+}
+
+.pwh .pwh-page__col {
+  display: grid;
+  gap: 12px;
+}
+
+.pwh .pwh-page .ss-bar {
+  max-width: 100%;
+  background: rgb(var(--pw-rule)) !important;
+}
+
+/* Skeleton and content share one slot, so the page resolves in place. */
+.pwh .pwh-slot {
+  display: grid;
+  align-items: center;
+}
+
+.pwh .pwh-slot > * {
+  grid-area: 1 / 1;
+  transition: opacity 0.35s ease;
+}
+
+.pwh .pwh-slot--h {
+  min-height: 24px;
+}
+
+.pwh .pwh-slot--p,
+.pwh .pwh-slot--p2 {
+  min-height: 16px;
+}
+
+.pwh .pwh-real {
+  opacity: 0;
+}
+
+.pwh .pwh-skel {
+  opacity: 0;
+}
+
+.pwh .pwh-page[data-state='skeleton'] .pwh-skel,
+.pwh .pwh-page[data-state='loaded'] .pwh-real {
+  opacity: 1;
+}
+
+/* Rows resolve top to bottom. */
+.pwh .pwh-page[data-state='loaded'] .pwh-slot--p > * {
+  transition-delay: 0.08s;
+}
+
+.pwh .pwh-page[data-state='loaded'] .pwh-slot--p2 > * {
+  transition-delay: 0.16s;
+}
+
+.pwh .pwh-h {
+  color: rgb(var(--pw-fg));
+  font-family: 'Fraunces Variable', Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pwh .pwh-p {
+  color: rgb(var(--pw-fg-muted));
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.pwh .pwh-page .pwh-link {
+  background: rgb(var(--pw-tcp)) !important;
+}
+
+.pwh .pwh-filler {
+  display: grid;
+  gap: 9px;
+  margin-top: 14px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.pwh .pwh-page:not([data-state='blank']) .pwh-filler {
+  opacity: 1;
+}
+
+.pwh .ss-stage[data-layout='compact'] .pwh-filler {
+  display: none;
+}
+
+/* ---- Wires, each ending in a dot on the machine it reaches ---- */
+
+.pwh .pwh-wire {
+  position: absolute;
+  background: rgb(var(--pw-rule-strong));
+  transition: background 0.2s ease;
+}
+
+.pwh .pwh-wire::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.pwh .pwh-wire[data-active='dns'] { background: var(--pwh-dns); }
+.pwh .pwh-wire[data-active='tcp'] { background: var(--pwh-tcp); }
+.pwh .pwh-wire[data-active='tls'] { background: var(--pwh-tls); }
+.pwh .pwh-wire[data-active='http'] { background: var(--pwh-http); }
+
+/* Wide: horizontal lanes from the browser's right edge. */
+.pwh .ss-stage[data-layout='wide'] .pwh-wire {
+  left: 336px;
+  width: 192px;
+  height: 1px;
+}
+.pwh .ss-stage[data-layout='wide'] .pwh-wire::after {
+  right: -2px;
+  top: -2px;
+}
+.pwh .ss-stage[data-layout='wide'] .pwh-wire--dns { top: 74px; }
+.pwh .ss-stage[data-layout='wide'] .pwh-wire--srv { top: 249px; }
+
+/* Compact: vertical lanes from the browser's foot. */
+.pwh .ss-stage[data-layout='compact'] .pwh-wire {
+  top: 252px;
+  width: 1px;
+  height: 94px;
+}
+.pwh .ss-stage[data-layout='compact'] .pwh-wire::after {
+  bottom: -2px;
+  left: -2px;
+}
+.pwh .ss-stage[data-layout='compact'] .pwh-wire--dns { left: 91px; }
+.pwh .ss-stage[data-layout='compact'] .pwh-wire--srv { left: 262px; }
+
+/* ---- The machines ---- */
+
+.pwh .pwh-resolver,
+.pwh .pwh-server {
+  position: absolute;
+  border-radius: 6px;
+  background: rgb(var(--pw-card));
+  box-shadow: var(--pwh-card-edge);
+  color: var(--pwh-ink);
+}
+
+.pwh .pwh-resolver {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  left: 528px;
+  top: 52px;
+  width: 160px;
+  height: 44px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.25s ease;
+}
+
+.pwh .pwh-resolver svg,
+.pwh .pwh-server__title svg {
+  flex: none;
+  color: var(--ss-icon);
+}
+
+.pwh .pwh-resolver[data-lit] {
+  background: var(--pwh-dns-tint);
+}
+
+.pwh .pwh-resolver[data-lit] svg {
+  color: var(--pwh-dns);
+}
+
+.pwh .pwh-server {
+  left: 528px;
+  top: 166px;
+  width: 160px;
+  padding: 0 12px 6px;
+}
+
+.pwh .ss-stage[data-layout='compact'] .pwh-resolver {
+  left: 16px;
+  top: 346px;
+  width: 150px;
+}
+
+.pwh .ss-stage[data-layout='compact'] .pwh-server {
+  left: 182px;
+  top: 346px;
+  width: 160px;
+  padding: 0 12px 4px;
+}
+
+.pwh .pwh-server__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  height: 52px;
+  border-bottom: 1px solid var(--ss-line);
+  white-space: nowrap;
+}
+
+.pwh .pwh-server__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pwh .pwh-mono {
+  color: var(--ss-text);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pwh .pwh-row {
+  display: grid;
+  grid-template-columns: 6px 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.pwh .pwh-row + .pwh-row {
+  border-top: 1px solid var(--ss-line-faint);
+}
+
+.pwh .pwh-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ss-fill);
+  transition: background 0.2s ease;
+}
+
+.pwh .pwh-row__label {
+  color: var(--ss-text-faint);
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.pwh .pwh-row__value {
+  justify-self: end;
+  color: var(--ss-text-faint);
+  transition: color 0.2s ease;
+}
+
+.pwh .pwh-row[data-on] .pwh-row__value {
+  color: var(--ss-text-strong);
+}
+
+.pwh .pwh-row[data-on][data-proto='tcp'] .pwh-dot { background: var(--pwh-tcp); }
+.pwh .pwh-row[data-on][data-proto='tls'] .pwh-dot { background: var(--pwh-tls); }
+.pwh .pwh-row[data-on][data-proto='http'] .pwh-dot { background: var(--pwh-http); }
+.pwh .pwh-row[data-on][data-proto='tcp'] .pwh-row__label { color: var(--pwh-tcp); }
+.pwh .pwh-row[data-on][data-proto='tls'] .pwh-row__label { color: var(--pwh-tls); }
+.pwh .pwh-row[data-on][data-proto='http'] .pwh-row__label { color: var(--pwh-http); }
+
+/* ---- Packets: a departure, clear travel and a soft arrival into the machine ---- */
+
+.pwh .pwh-packet {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 8px;
+  border: 1.5px solid currentColor;
+  border-radius: 5px;
+  background: rgb(var(--pw-card));
+  box-shadow: 2px 2px 0 0 var(--pwh-edge);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation-name: pwh-fly;
+  animation-timing-function: var(--pwh-travel);
+  animation-fill-mode: both;
+  pointer-events: none;
+}
+
+.pwh .pwh-packet[data-proto='dns'] { color: var(--pwh-dns); background: var(--pwh-dns-tint); }
+.pwh .pwh-packet[data-proto='tcp'] { color: var(--pwh-tcp); background: var(--pwh-tcp-tint); }
+.pwh .pwh-packet[data-proto='tls'] { color: var(--pwh-tls); background: var(--pwh-tls-tint); }
+.pwh .pwh-packet[data-proto='http'] { color: var(--pwh-http); background: var(--pwh-http-tint); }
+
+/* Returning packets play the same flight backwards. */
+.pwh .pwh-packet[data-dir='in'] {
+  animation-direction: reverse;
+}
+
+/* Each lane runs from the browser's edge (1) to the machine's edge (2). A
+   packet leaves with its back edge on the browser and docks with its front
+   edge on the machine, so it never covers either. */
+.pwh .ss-stage[data-layout='wide'] .pwh-packet { --a1: 0%, -50%; --a2: -100%, -50%; }
+.pwh .ss-stage[data-layout='compact'] .pwh-packet { --a1: -50%, 0%; --a2: -50%, -100%; }
+.pwh .ss-stage[data-layout='wide'] .pwh-packet[data-lane='dns'] { --x1: 336px; --y1: 74px; --x2: 528px; --y2: 74px; }
+.pwh .ss-stage[data-layout='wide'] .pwh-packet[data-lane='srv'] { --x1: 336px; --y1: 249px; --x2: 528px; --y2: 249px; }
+.pwh .ss-stage[data-layout='compact'] .pwh-packet[data-lane='dns'] { --x1: 91px; --y1: 252px; --x2: 91px; --y2: 346px; }
+.pwh .ss-stage[data-layout='compact'] .pwh-packet[data-lane='srv'] { --x1: 262px; --y1: 252px; --x2: 262px; --y2: 346px; }
+
+@keyframes pwh-fly {
+  0% {
+    transform: translate(var(--x1), var(--y1)) translate(var(--a1));
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x2), var(--y2)) translate(var(--a2));
+    opacity: 0;
+  }
+}
