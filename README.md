@@ -1,106 +1,112 @@
+<div align="center">
+
+<img src="public/favicon.svg" width="64" height="64" alt="">
+
 # PacketWorld
 
-**The internet is not magic. See how it works.**
+**See what actually happens when you open a website.**
 
-**Live site:** https://packetworld.vercel.app
+[Open the site](https://packetworld.vercel.app) · [Watch the intro](docs/media/packetworld-intro.mp4) · [Lessons](https://packetworld.vercel.app/#/learn) · [Report a mistake](https://github.com/opixdown/packetworld/issues/new?template=accuracy_report.md)
 
-PacketWorld is an open-source, interactive learning platform that shows what actually happens when you open a website. Type a URL, press **Start Journey**, and watch every packet travel from your browser to a server and back, through DNS, TCP, TLS and HTTP. Pause anywhere, step backwards, click any machine or packet to look inside, and break things on purpose to see how the protocols recover.
+</div>
 
-> The journey is a deterministic simulation: it behaves the same for everyone and is safe to use in a classroom. The only real network request is the optional **Look it up for real** button, which asks a public DNS resolver for a site's real address, and only when you click it.
+![PacketWorld](docs/screenshots/landing.png)
 
-![PacketWorld landing page](docs/screenshots/landing.png)
+Most networking material explains DNS, TCP and TLS with a diagram and a wall of text. You read it, you nod, and an hour later it's gone.
 
-▶ **[Watch the intro video](docs/media/packetworld-intro.mp4)**
+PacketWorld lets you watch it instead. Type a URL, press Start, and follow every packet from your browser to the server and back. The simulation stops after each step and tells you what just happened in a sentence or two. If a word or a box on the screen doesn't make sense, tap it and a small explanation pops up right there.
 
-## See it in action
+I built it with a Class 11 student in mind: someone who's curious and has never heard of a three-way handshake. It goes deep enough for developers too. Switch to Technical and you get real header fields, sequence numbers and RFC references.
 
-**Journey: follow every packet.** The simulation stops after each step and explains it in a sentence or two. Here the DNS resolver is asking a root server where to find example.com.
+<a href="docs/media/packetworld-intro.mp4"><img src="docs/media/intro-poster.png" alt="Watch the 41-second intro video" width="100%"></a>
 
-![Journey mode: a DNS query travelling from the resolver to a root server](docs/screenshots/journey.png)
+## What's inside
 
-**Tap anything to learn what it is.** Every machine and packet opens a small explainer right where you tapped. Underlined words have one-line definitions.
+**Journey.** The main thing. Pick any address and watch the whole trip: the DNS lookup (with or without caching), the TCP handshake, TLS 1.3 and the HTTP request. Step forward, step back, scrub, or let it autoplay.
 
-![Tap-to-learn bubble on the DNS resolver](docs/screenshots/tap-to-learn.png)
+**Tap to learn.** Every machine and every packet on the map opens a short explainer. Tricky words in the text are underlined and clickable.
 
-**Break things on purpose.** Lose the SYN and watch TCP wait one second and send it again, with the same sequence number.
+**Break it on purpose.** Lose the SYN. Lose the final ACK. Expire the certificate. Make the server ignore you. Each failure plays out step by step, with the real recovery behaviour.
 
-![Lesson: breaking the TCP handshake](docs/screenshots/lesson-handshake.png)
+**Playground.** Drag sliders for latency, packet loss and server time, and see exactly where the extra seconds go.
 
-**Playground.** Pick an experiment, turn the dials, and see what it costs.
+**Ten lessons.** IP addresses and ports, DNS, TCP vs UDP, TLS, HTTP, routing, NAT and more. Each has a small interactive lab and a three-question quiz.
 
-![Playground with the lost-SYN experiment](docs/screenshots/playground.png)
+**Try it for real.** One button looks up a site's real IP address over DNS-over-HTTPS. Another loads the real page. A short guide shows you the same stages in your own browser's DevTools.
 
-**Try it for real.** Look up a site's real addresses over DNS-over-HTTPS and compare them with the simulation.
+It also has a light and a dark theme, works on phones, and needs no account.
 
-![Real DNS lookup for example.com](docs/screenshots/real-lookup.png)
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/journey.png" alt="A DNS query on its way to a root server"></td>
+    <td width="50%"><img src="docs/screenshots/tap-to-learn.png" alt="Tapping the DNS resolver opens an explainer"></td>
+  </tr>
+  <tr>
+    <td>The resolver asking a root server where example.com lives</td>
+    <td>Tap any machine to see what it does</td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/lesson-handshake.png" alt="A lesson where the SYN packet gets lost"></td>
+    <td><img src="docs/screenshots/playground.png" alt="The Playground with a lost SYN"></td>
+  </tr>
+  <tr>
+    <td>Losing a SYN, then watching TCP send it again a second later</td>
+    <td>Playground: change the network and compare the timings</td>
+  </tr>
+</table>
 
-<p align="center"><img src="docs/screenshots/mobile.png" alt="PacketWorld on a phone" width="300"></p>
+## Is it accurate?
 
-## Features
+That's the part I care about most. The journey is a simulation, so it behaves the same for everyone and nothing touches your network. But the packets follow the real rules: sequence numbers add up from the first SYN to the last byte, DNS shows caching instead of pretending every lookup starts at the root, and encrypted packets list what someone on your Wi-Fi can still see.
 
-- **Light or dark.** Opens on light paper and ink, with a one-click dark chalkboard theme.
-- **Guided by default.** The simulation stops after every step and explains it in one or two sentences. "Why?", "Real-life example" and "Technical detail" open on request; Autoplay is one switch away.
-- **Tap anything to learn.** Every machine and packet on the map opens a small explainer bubble right where you tapped, and key words in explanations are clickable.
-- **Try it for real.** Look up a site's real IPv4 and IPv6 addresses, TTLs and DNSSEC status over DNS-over-HTTPS, and compare them with the simulation.
-- **Journey mode.** An animated network map (browser, home router, DNS resolver, root, TLD and authoritative servers, web server) with play, pause, step, scrub and speed controls, and keyboard shortcuts (Space, ← and →).
-- **Packet inspector.** Every packet shows its source and destination, protocol layers (IPv4, UDP/TCP, DNS, TLS, HTTP) and real header fields, plus what an on-path observer can still see when it is encrypted.
-- **Beginner and technical modes.** One switch changes every explanation, from plain language with real-life comparisons to protocol detail with RFC references.
-- **Failure scenarios.** NXDOMAIN, lost SYN, lost SYN-ACK, lost final ACK, an unresponsive server, an expired certificate and HTTP 404, each explained step by step.
-- **Playground.** Dials for latency, packet loss, server response time and DNS cache state, eight guided experiments, a timing waterfall, and shareable links.
-- **Learn.** Ten interactive lessons (how the internet works, IP addresses and ports, DNS, TCP vs UDP, the TCP handshake, TLS/HTTPS, HTTP, routing, NAT and firewalls, latency and loss), each with a lab, two levels of explanation and a quiz.
-- **Accurate by design.** DNS caching, UDP and QUIC, TLS 1.3, hop-by-hop routing and visible metadata are all represented honestly. Every simplification is documented in [docs/ACCURACY.md](docs/ACCURACY.md).
-- **No account, no backend, no tracking.** Lesson progress is stored only in your browser.
+Where it simplifies, it says so. [docs/ACCURACY.md](docs/ACCURACY.md) lists every shortcut and why it's there. If you spot something wrong, please [open an accuracy report](https://github.com/opixdown/packetworld/issues/new?template=accuracy_report.md). Those get fixed first.
 
-## Quick start
+## Run it yourself
 
-Requires Node.js 20 or later (see `.nvmrc`).
+You need Node.js 20 or newer.
 
 ```sh
+git clone https://github.com/opixdown/packetworld.git
+cd packetworld
 npm install
-npm run dev        # start the dev server at http://localhost:5173
-npm test           # run the simulation test suite
-npm run typecheck  # TypeScript, no emit
-npm run build      # production build in dist/
+npm run dev
 ```
 
-## How it is built
+Then open http://localhost:5173.
 
-React, TypeScript and Vite, with Tailwind CSS for styling (a "lab notebook" look: paper, ink and protocol-coloured markers), SVG for the diagrams and Framer Motion for small UI transitions. The protocol simulation in [`src/sim`](src/sim) is plain TypeScript with no React imports: it turns a configuration into an ordered list of events that the UI plays back.
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server with hot reload |
+| `npm test` | Simulation tests (Vitest) |
+| `npm run typecheck` | TypeScript, no output |
+| `npm run build` | Production build into `dist/` |
+
+## How it's built
+
+React, TypeScript and Vite, styled with Tailwind. The diagrams are plain SVG.
+
+The interesting bit is `src/sim/`. It's a small, deterministic protocol simulator with no React in it: you give it a URL and some settings, and it returns an ordered list of events (a packet moving, a cache lookup, a timer firing). The UI just plays those events back. That's what makes stepping backwards, sharing a setup by link, and testing the packet maths possible.
 
 ```
 src/
-  sim/            Protocol simulation (pure, deterministic, tested)
-  live/           The optional real DNS-over-HTTPS lookup
-    stages/       DNS, TCP, TLS and HTTP event builders
-  hooks/          usePlayback: the play/pause/step/seek clock
-  components/     NetworkCanvas, Packet, PacketInspector, SimulationControls, Quiz, …
-    labs/         Interactive labs used by the lessons
-  content/        Lessons, quizzes, experiments, glossary, machine descriptions
-  pages/          Landing, Journey, Playground, Learn, Lesson
-  landing/        The animated landing hero (built with the Stageshow kit)
-  vendor/         Third-party source kept in the repo (Stageshow kit, MIT)
-docs/             Architecture, accuracy notes, design system, ADRs, roadmap
+  sim/          the protocol simulator (DNS, TCP, TLS, HTTP), fully tested
+  components/   the map, step card, inspector, lesson labs
+  content/      lessons, quizzes, glossary, experiments
+  pages/        Landing, Journey, Playground, Learn
+docs/           architecture, accuracy notes, design system, decision records
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full picture and [docs/SIMULATION_MODEL.md](docs/SIMULATION_MODEL.md) for how a journey is built.
+More detail lives in the docs:
 
-## Documentation
-
-| Document | What it covers |
-|---|---|
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Layers, data flow, folder structure, key components |
-| [docs/SIMULATION_MODEL.md](docs/SIMULATION_MODEL.md) | Events, world state, timing, loss, and how to add a protocol step |
-| [docs/ACCURACY.md](docs/ACCURACY.md) | Every simplification we make, and the facts we refuse to simplify |
-| [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) | Colours, the protocol palette, type, motion, accessibility |
-| [docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.md) | How to write beginner and technical explanations, lessons and quizzes |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | What is done, and what comes next |
-| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Publishing to GitHub Pages or any static host |
-| [docs/decisions/](docs/decisions) | Architecture Decision Records: why things are the way they are |
+- [Architecture](docs/ARCHITECTURE.md) and [the simulation model](docs/SIMULATION_MODEL.md)
+- [Design system](docs/DESIGN_SYSTEM.md) and [how to write lessons](docs/CONTENT_GUIDE.md)
+- [Decision records](docs/decisions/README.md), if you want to know why something is the way it is
+- [Roadmap](docs/ROADMAP.md). Next up: importing a real Wireshark capture and replaying it on the map.
 
 ## Contributing
 
-Contributions are very welcome, especially accuracy fixes, new lessons, translations and accessibility improvements. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Found something technically wrong? Please open an **accuracy report**: for an educational tool, those are the most valuable issues.
+Help is very welcome, especially fixes to explanations, new lessons, translations and accessibility. Read [CONTRIBUTING.md](CONTRIBUTING.md) first, then open an issue or a pull request.
 
 ## License
 
-[MIT](LICENSE). The vendored Stageshow kit in `src/vendor/stageshow` is also MIT licensed; see its own `LICENSE`.
+[MIT](LICENSE). The landing animation uses the [Stageshow](https://github.com/benjitaylor/skills/tree/main/stageshow) kit (also MIT), vendored in `src/vendor/stageshow`.
