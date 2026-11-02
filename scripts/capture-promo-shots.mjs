@@ -23,7 +23,7 @@ async function page(opts = {}) {
     try {
       localStorage.setItem('pw.hint.map', 'true')
       localStorage.setItem('pw.guided', 'true')
-      localStorage.setItem('pw.theme', JSON.stringify('dark'))
+      localStorage.setItem('pw.theme.choice', JSON.stringify('dark'))
     } catch {}
   })
   return { ctx, p: await ctx.newPage() }

@@ -4,8 +4,7 @@
 
 @layer base {
   /* Theme tokens as RGB channels, so Tailwind's opacity modifiers keep working.
-     Dark is the default; [data-theme='light'] switches everything (ADR 0022). */
-  :root,
+     Light is the default; [data-theme='dark'] switches everything (ADR 0022). */
   :root[data-theme='dark'] {
     color-scheme: dark;
     --pw-paper: 23 22 20;
@@ -40,6 +39,7 @@
     --pw-highlight: rgb(245 213 71 / 0.45);
   }
 
+  :root,
   :root[data-theme='light'] {
     color-scheme: light;
     --pw-paper: 243 238 228;

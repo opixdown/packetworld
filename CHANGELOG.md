@@ -19,7 +19,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Changed
 
-- The site is dark by default: a warm "chalkboard" version of the notebook design (ADR 0021), with a sun/moon toggle for the light theme (ADR 0022).
+- Light and dark themes: the site opens on the light notebook design, and a sun/moon toggle switches to a dark "chalkboard" version (ADR 0021, ADR 0022).
 - New "lab notebook" visual design: paper and ink, Fraunces / Atkinson Hyperlegible / IBM Plex Mono, protocol inks and highlighter tints.
 - Playground: experiments and dials moved to the top, followed by the simulation and then the timing.
 - Lesson labs use the same step card and tap-to-learn bubbles.

@@ -38,7 +38,7 @@ PacketWorld is an open-source, interactive learning platform that shows what act
 
 ## Features
 
-- **Dark or light.** A dark chalkboard look by default, with a one-click light theme.
+- **Light or dark.** Opens on light paper and ink, with a one-click dark chalkboard theme.
 - **Guided by default.** The simulation stops after every step and explains it in one or two sentences. "Why?", "Real-life example" and "Technical detail" open on request; Autoplay is one switch away.
 - **Tap anything to learn.** Every machine and packet on the map opens a small explainer bubble right where you tapped, and key words in explanations are clickable.
 - **Try it for real.** Look up a site's real IPv4 and IPv6 addresses, TTLs and DNSSEC status over DNS-over-HTTPS, and compare them with the simulation.

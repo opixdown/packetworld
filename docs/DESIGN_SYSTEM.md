@@ -1,6 +1,6 @@
 # Design system: "Lab notebook" on a chalkboard
 
-PacketWorld looks like a well-kept science notebook. By default it is drawn on a chalkboard (a warm dark board, chalk-white text, coloured chalk); a sun/moon toggle in the header switches to the light paper-and-ink version ([ADR 0022](decisions/0022-light-and-dark-toggle.md)). It is built for students of about 16 who are meeting networking for the first time. The reasoning is in [ADR 0017](decisions/0017-lab-notebook-visual-direction.md) and [ADR 0021](decisions/0021-always-dark-chalkboard-theme.md); the learning interactions are in [ADR 0019](decisions/0019-guided-mode-and-progressive-disclosure.md).
+PacketWorld looks like a well-kept science notebook. It opens on light paper and ink; a sun/moon toggle in the header switches to a dark chalkboard (a warm dark board, chalk-white text, coloured chalk) ([ADR 0022](decisions/0022-light-and-dark-toggle.md)). It is built for students of about 16 who are meeting networking for the first time. The reasoning is in [ADR 0017](decisions/0017-lab-notebook-visual-direction.md) and [ADR 0021](decisions/0021-always-dark-chalkboard-theme.md); the learning interactions are in [ADR 0019](decisions/0019-guided-mode-and-progressive-disclosure.md).
 
 ## Principles
 
